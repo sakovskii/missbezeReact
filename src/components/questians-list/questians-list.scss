@@ -1,0 +1,74 @@
+@import '../../styles/variables';
+
+.faq {
+    width: 100%;
+    padding: 100px 0;
+
+    &__item {
+        cursor: pointer;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+
+    &__wrapper {
+        display: flex;
+        align-items: center;
+
+        img {
+            margin-right: 20px;
+            width: 13px;
+            height: 13px;
+            transform: scale(-1, 1);
+            transition: transform 0.3s ease;
+        }
+    }
+
+    &__question {
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+        border: none;
+        background: none;
+        text-align: left;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+    }
+
+    &__answer {
+        display: none;
+        height: 0;
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 24px;
+        padding: 0 0 0 33px;
+        max-height: 0;
+        transition: all 0.3s;
+    }
+
+    &__item.active &__answer {
+        display: block;
+        height: auto;
+        max-height: 500px;
+        /* Достаточно большое значение для контента */
+        padding: 15px 0 15px 33px;
+    }
+
+    &__item.active &__wrapper img {
+        transform: scale(-1, 1) rotate(-90deg);
+    }
+}
+
+@media (max-width: 576px) {
+    .faq {
+        padding: 60px 0; 
+        &__question {
+            font-size: 16px;
+        }
+        &__item {
+            margin-bottom: 0;
+        }
+
+    }
+}

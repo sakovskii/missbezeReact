@@ -1,0 +1,108 @@
+@import '../../styles/variables';
+
+.constructor {
+    width: 100%;
+    padding: 100px 0;
+
+    background: url('../../assets/img/main/about-constructor_bg.jpg') no-repeat center center/cover;
+
+
+    &__wrapper {
+        width: 100%;
+        display: flex;
+
+    }
+
+    &__info {
+        width: 50%;
+        padding-right: 30px;
+    }
+
+    &__descr {
+        max-width: 500px;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 26px;
+        margin-bottom: 45px;
+    }
+
+    &__cake {
+        position: relative;
+        padding: 30px;
+        height: 550px;
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__bg {
+        position: absolute;
+        width: 100%; // Размер полукруга
+        height: 300px; // Половина высоты — получается полукруг
+        background-color: $primary-color; // Цвет фона (подбери свой)
+        border-radius: 0 0 300px 300px; // Делаем только верхнюю часть скруглённой
+        top: 80%;
+        transform: translateY(-50%);
+        z-index: 0;
+    }
+
+    // Сам торт поверх фона
+    &_img {
+        max-height: 100%;
+        max-width: 100%;
+        width: auto;
+        height: auto;
+        position: relative;
+        z-index: 1; // Поднимаем торт выше полукруга
+    }
+
+    &__advantages {
+        margin-bottom: 50px;
+    }
+
+    &__list {
+        list-style: none;
+    }
+
+    &__item {
+        margin-bottom: 20px;
+        display: flex;
+        background-image: url('../../assets/img/main/check.svg');
+        background-repeat: no-repeat;
+        background-position: left center;
+        padding-left: 24px; /* Отступ для иконки */
+    }
+
+
+    &__check {
+        margin-right: 15px;
+    }
+
+}
+
+@media (max-width: 1200px) {
+    .constructor {
+        &__bg {
+            width: 100%; // Размер полукруга
+            height: 50%; // Половина высоты — получается полукруг
+        }
+    }
+}
+
+@media (max-width: 992px) {
+    .constructor {
+      &__wrapper {
+        flex-direction: column-reverse; // Изменено с column на column-reverse
+      
+      }
+      &__info {
+        width: 100%;
+      }
+      &__cake {
+        display: none;
+      }
+      
+      
+    }
+  }

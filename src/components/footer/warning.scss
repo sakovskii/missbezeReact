@@ -1,0 +1,13 @@
+@import '../../styles/variables';
+
+.warning {
+    font-size: 11px;
+    font-weight: 300;
+    line-height: 12px;
+    color: $secondary-color;
+
+    &_red {
+        text-transform: uppercase;
+        color: $primary-color;
+    }
+}

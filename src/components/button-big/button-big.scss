@@ -1,0 +1,44 @@
+@import '../../styles/variables';
+
+.btn {
+    width: 280px;
+    height: 60px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: $primary-color;
+    transition: background-color 0.3s;
+    color: $text-color;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-style: 16px;
+    font-weight: 700;
+    box-shadow: $btn-shadow;
+
+    &:hover {
+        cursor: pointer;
+        background-color: $primary-color-hover;
+    }
+
+    &__link {
+        font-size: 16px;
+        font-weight: 300;
+        color: $secondary-color;
+        margin-bottom: 25px;
+        text-decoration: none;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &_form {
+        width: 200px;
+        height: 40px;
+        font-style: 16px;
+        font-weight: 500;
+    }
+
+}

@@ -6,7 +6,7 @@ import clip from "../../assets/img/main/clip.svg";
 
 const Footer = () => {
     return (
-        <footer className="order">
+        <footer className="order" id="footer">
             <div className="container">
                 <div className="title title_right">Оставить заявку</div>
                 <div className="order__wrapper">
@@ -46,7 +46,7 @@ const Footer = () => {
                         </div>
 
                         <label className="form__textarea-wrapper">
-                            <textarea name="message" placeholder="Ваше сообщение" />
+                            <textarea name="message" placeholder="Комментарий к заказу" />
                             <button type="button" className="attach-button">
                                 <img src={clip} alt="" />
                                 Прикрепить фото
@@ -56,7 +56,7 @@ const Footer = () => {
                         <div className="form__bottom">
                             <div className="form__left">
                                 <div className="price">Цена — <span>3 430</span> ₽</div>
-                                <p className="warning"><span className="warning_red">Важно!</span> Обязательно предупреждайте об аллергических реакциях на любые компоненты начинок или декора для исключения их из состава.</p>
+                                <p className="warning warning_11px"><span className="warning_red">Важно!</span> Обязательно предупреждайте об аллергических реакциях на любые компоненты начинок или декора для исключения их из состава.</p>
                             </div>
                             <div className="form__right">
                                 <button type="submit" className="btn btn_form">Отправить</button>

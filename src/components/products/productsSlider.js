@@ -1,31 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import Slider from "react-slick";
 import arrowLeft from "../../assets/img/main/arrow_left.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./cakes-slider.scss";
 
-const ProductsSlider = ({ products, title, productType }) => {
+const ProductsSlider = ({ products, title, productType, addToCart }) => {
   const sliderRef = useRef(null);
-  const [cartItems, setCartItems] = useState([]);
 
   const nextSlide = () => sliderRef.current.slickNext();
   const prevSlide = () => sliderRef.current.slickPrev();
-
-  const addToCart = (product) => {
-    const newCartItem = {
-      id: Date.now(), // уникальный ID для корзины
-      productType: productType, // "cake" или "desert"
-      productId: product.id,
-      name: product.name,
-      price: product.price,
-      quantity: 1,
-      image: product.imgPath
-    };
-    
-    setCartItems(prevItems => [...prevItems, newCartItem]);
-    console.log("Товары в корзине:", [...cartItems, newCartItem]);
-  };
 
   const settings = {
     dots: false,
@@ -37,17 +21,17 @@ const ProductsSlider = ({ products, title, productType }) => {
     responsive: [
       {
         breakpoint: 992,
-        settings: { slidesToShow: 3 }
+        settings: { slidesToShow: 3 },
       },
       {
         breakpoint: 768,
-        settings: { slidesToShow: 2 }
+        settings: { slidesToShow: 2 },
       },
       {
         breakpoint: 576,
-        settings: { slidesToShow: 1 }
-      }
-    ]
+        settings: { slidesToShow: 1 },
+      },
+    ],
   };
 
   return (
@@ -80,9 +64,9 @@ const ProductsSlider = ({ products, title, productType }) => {
                 )}
                 <h3 className="slider__name">{product.name}</h3>
                 <p className="slider__descr">Подробнее</p>
-                <button 
-                  className="slider__cart-btn" 
-                  onClick={() => addToCart(product)}
+                <button
+                  className="slider__cart-btn"
+                  onClick={() => addToCart(product, productType)}
                 >
                   В корзину
                 </button>

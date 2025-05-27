@@ -1,0 +1,206 @@
+@import '../../styles/variables';
+
+.cart {
+  position: fixed;
+  top: -630px;
+  right: 10%;
+  width: 300px;
+  max-height: 480px;
+  background-color: $bgcart-color;
+  box-shadow: $btn-shadow;
+  z-index: 998;
+  transition: top 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+
+  &.cart_open {
+    top: 95px;
+  }
+
+  &__empty{ 
+    font-size: 16px;
+    font-weight: 300;
+    
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 15px;
+    padding-top: 25px;
+
+    h3 {
+      font-family: 'Montserrat';
+      font-size: 16px;
+      font-weight: 900;
+      margin: 0;
+    }
+
+    .cart__clear {
+      background: none;
+      border: none;
+      color: $primary-color;
+      cursor: pointer;
+      font-size: 14px;
+
+      &:hover {
+        color: $primary-color-hover;
+      }
+    }
+  }
+
+  &__items {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding: 0 15px;
+
+    /* Стилизация полосы прокрутки для WebKit-браузеров (Chrome, Safari) */
+    &::-webkit-scrollbar {
+      width: 4px; /* Ширина полосы прокрутки */
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1; /* Цвет трека */
+      border-radius: 2px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: #888; /* Цвет ползунка */
+      border-radius: 2px;
+      
+      &:hover {
+        background: #555; /* Цвет при наведении */
+      }
+    }
+    
+    /* Для Firefox */
+    scrollbar-width: thin; /* "auto" | "thin" | "none" */
+    scrollbar-color: #888 #f1f1f1; /* thumb и track цвета */
+  }
+
+  &__item {
+    display: flex;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    background-color: $text-color;
+    box-shadow: $btn-shadow;
+    padding: 10px;
+
+    &-img {
+      width: 45px;
+      height: 45px;
+      object-fit: cover;
+      margin-right: 10px;
+      border-radius: 4px;
+    }
+
+    &-info {
+      flex: 1;
+    }
+
+    &-name {
+      font-weight: bold;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 9px;
+      margin-bottom: 8px;
+      color: $secondary-color;
+      opacity: 0.5;
+    }
+
+    &-price {
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 9px;
+      margin-bottom: 8px;
+      color: $secondary-color;
+    }
+
+    &-wrapper {
+      display: flex;
+      height: 10px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &-quantity {
+      display: flex;
+      height: 9px;
+      align-items: center;
+    }
+
+    &-qbtn {
+      border: none;
+      background-color: transparent;
+
+      font-size: 16px;
+      color: $primary-color;
+      line-height: 9px;
+      cursor: pointer;
+
+      &:first-child {
+        font-size: 18px;
+        margin-right: 15px;
+      }
+      &:last-child {
+        margin-left: 15px;
+      }
+    }
+
+    &-qty {
+      box-sizing: border-box;
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 9px;
+    }
+
+    &-remove {
+      background: none;
+      border: none;
+      color: $secondary-color;
+      opacity: .5;
+      font-size: 12px;
+      cursor: pointer;
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+
+  
+
+  &__footer {
+    border-top: 1px solid #eee;
+    padding: 15px;
+
+
+    .cart__total {
+      font-size: 14px;
+      margin-bottom: 15px;
+      font-weight: 300;
+    }
+
+    .cart__checkout {
+      width: 100%;
+      height: 40px;
+      padding: 8px;
+      background-color: $primary-color;
+      color: $text-color;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 6px;
+
+      font-size: 16px;
+      font-weight: 500;
+
+      &:hover {
+        background-color: $primary-color-hover;
+      }
+    }
+  }
+}

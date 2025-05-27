@@ -106,7 +106,7 @@
             padding: 15px;
             padding-bottom: 20px;
             border: 1px solid $border-color;
-            border-radius: 8px;
+            border-radius: 6px;
             margin-bottom: 60px;
             resize: none;
         }
@@ -254,6 +254,11 @@
         border: 1px solid $border-color;
         padding: 5px 15px;
         margin-bottom: 20px;
+
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 45px;
+        color: $secondary-color;
     }
 
     // textarea {
@@ -265,7 +270,21 @@
     //     resize: none;
     // }
 
+    &_constr {
+        padding: 0;
+        box-shadow: none;
 
+        input {
+            height: 40px;
+            margin-bottom: 0;
+            width: 280px;
+        }
+
+        .form__wrapper {
+            gap: 20px;
+        }
+
+    }
 
 }
 

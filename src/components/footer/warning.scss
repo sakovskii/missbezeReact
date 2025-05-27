@@ -1,7 +1,7 @@
 @import '../../styles/variables';
 
 .warning {
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 300;
     line-height: 12px;
     color: $secondary-color;
@@ -9,5 +9,10 @@
     &_red {
         text-transform: uppercase;
         color: $primary-color;
+    }
+
+    &_11px {
+        font-size: 11px;
+        line-height: 12px;
     }
 }

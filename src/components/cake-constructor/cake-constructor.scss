@@ -1,0 +1,650 @@
+@import '../../styles/variables';
+
+$max-with_pc: 630px;
+
+.configurator {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 100vh;
+    height: 100%;
+    background-color: $white-color;
+    padding-top: calc(60px + 75px);
+
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+    }
+
+    &__inner {
+        margin-right: 35px;
+        max-width: $max-with_pc;
+        width: 100%;
+    }
+
+
+    &__progress {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        gap: 20px;
+        padding: 0 15px;
+
+        .progress-line {
+            position: absolute;
+            z-index: 4;
+            left: 20px;
+            right: 20px;
+            top: calc(50% - 1px);
+            height: 2.5px;
+            background-color: $border-color;
+            overflow: hidden;
+
+            &-active {
+                height: 100%;
+                background-color: $progress-color;
+                transition: width 0.5s ease-out;
+                position: relative;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    height: 100%;
+                    width: 0;
+                    background-color: $progress-color;
+                    animation: pulse 1s infinite;
+                }
+            }
+        }
+    }
+
+    &__main {
+        display: flex;
+        gap: 40px;
+    }
+
+    &__form {
+        flex: 1;
+        max-width: 600px;
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 35px;
+
+        p {
+            max-width: $max-with_pc;
+            width: 100%;
+        }
+    }
+}
+
+.progress-step {
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    z-index: 5;
+    background-color: $white-color;
+    border: 2px solid $border-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $border-color;
+    font-size: 18px;
+    font-weight: 600;
+    position: relative;
+    transform: scale(0.8);
+    transition: all 0.5s ease-out;
+
+    &.active {
+        border-color: $progress-color;
+        color: $progress-color;
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 0.5;
+        transform: translateY(0);
+    }
+}
+
+.form-group {
+    margin-bottom: 30px;
+
+    &__title {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 15px;
+    }
+}
+
+.tiers-selector,
+.shape-selector {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.tiers-option,
+.shape-option {
+    padding: 10px 20px;
+    border: 2px solid #f0d8df;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &.active {
+        border-color: #d45d79;
+        background-color: #f8e8ed;
+    }
+}
+
+.servings-selector {
+    .servings-options {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+    }
+
+    .serving-option {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 2px solid #f0d8df;
+        background: white;
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.3s;
+
+        &.active {
+            border-color: #d45d79;
+            background-color: #f8e8ed;
+        }
+    }
+
+    .servings-note {
+        color: #666;
+        font-size: 14px;
+    }
+}
+
+.configurator__preview {
+    width: 350px;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.preview-block {
+    margin-bottom: 25px;
+}
+
+.preview-title {
+    font-size: 18px;
+    color: #d45d79;
+    margin-bottom: 15px;
+}
+
+.preview-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+        margin-bottom: 8px;
+        color: #555;
+    }
+}
+
+.preview-visual {
+    height: 200px;
+    background: #f9f3f5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: #d45d79;
+}
+
+.preview-notice {
+    font-size: 14px;
+    color: #666;
+    padding: 15px;
+    background: #fff0f5;
+    border-radius: 10px;
+}
+
+.param {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 20px;
+
+    /* Стилизация полосы прокрутки для WebKit-браузеров (Chrome, Safari) */
+    &::-webkit-scrollbar {
+        width: 4px;
+        /* Ширина полосы прокрутки */
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        /* Цвет трека */
+        border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+        /* Цвет ползунка */
+        border-radius: 2px;
+
+        &:hover {
+            background: #555;
+            /* Цвет при наведении */
+        }
+    }
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 25px;
+
+        textarea:focus {
+            outline: none; // убирает синюю обводку браузера
+            border: none; // убирает сам border
+            box-shadow: none; // на всякий случай, если браузер добавляет glow
+        }
+
+        select {
+            appearance: none; // убираем дефолтную стрелку
+            -webkit-appearance: none;
+            -moz-appearance: none;
+
+            border: 1px solid $border-color;
+            border-radius: 6px;
+            padding: 0 15px; // отступ справа для стрелки
+
+            font-size: 16px;
+            max-width: 300px;
+            font-weight: 300;
+            color: $secondary-color;
+            line-height: 40px;
+
+            width: 100%;
+            height: 40px;
+            position: relative;
+            background-image: url('/assets/img/main/arrow_down.svg'); // своя стрелка
+            background-repeat: no-repeat;
+            background-position: right 15px center; // размещение стрелки
+            background-size: 16px 16px;
+
+            &:focus {
+                outline: none;
+                border-color: #f28bbd; // активный бордер
+            }
+        }
+
+        textarea {
+            width: 100%;
+            height: 110px;
+            padding: 15px;
+            padding-bottom: 20px;
+            border: 1px solid $border-color;
+            border-radius: 6px;
+            resize: none;
+            margin-top: 20px;
+
+            font-size: 16px;
+            font-weight: 300;
+            color: $secondary-color;
+        }
+
+        .textarea {
+            position: relative;
+            width: 100%;
+            height: 110px;
+            padding: 15px;
+            padding-bottom: 25px;
+            border: 1px solid $border-color;
+            border-radius: 6px;
+            margin-top: 20px;
+
+            &__input {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+                border-radius: 0;
+                resize: none;
+
+                font-size: 16px;
+                font-weight: 300;
+                color: $secondary-color;
+
+            }
+
+            &__button {
+                position: absolute;
+                bottom: 8px;
+                left: 15px;
+                background: none;
+                border: none;
+                color: $secondary-color;
+                opacity: 0.5;
+                font-size: 0.9rem;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                cursor: pointer;
+                padding: 0;
+                transition: all 0.3s;
+
+                svg {
+                    width: 16px;
+                    height: 16px;
+                }
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+        }
+    }
+
+    &__counter {
+
+        &-wrapper {
+            display: flex;
+            align-items: center;
+
+        }
+
+        &-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            height: 40px;
+            width: 100px;
+            border: 1px solid $border-color;
+            border-radius: 6px;
+            margin-right: 15px;
+        }
+
+        &-value {
+            color: $secondary-color;
+            font-weight: 300;
+            line-height: 40px;
+            font-size: 16px;
+        }
+
+        &-info {
+            p {
+                color: $secondary-color;
+                font-size: 16px;
+                line-height: 16px;
+                font-weight: 300;
+            }
+
+            span {
+                color: $secondary-color;
+                font-size: 16px;
+                line-height: 16px;
+                font-weight: 500;
+            }
+
+        }
+    }
+
+    &__operator {
+        border: none;
+        background-color: $white-color;
+        background-color: transparent;
+        cursor: pointer;
+        font-weight: 300;
+        line-height: 40px;
+        color: $secondary-color;
+
+        &_plus {
+            padding-right: 15px;
+            padding-left: 10px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        &_minus {
+
+            padding-left: 15px;
+            padding-right: 10px;
+            font-size: 18px;
+            border-radius: 6px 0 0 6px;
+        }
+
+        &:hover {
+            background-color: $primary-color;
+        }
+    }
+
+}
+
+.nav-buttons {
+    display: flex;
+}
+
+.nav-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    cursor: pointer;
+
+    max-width: 130px;
+    width: 130px;
+    margin-left: 20px;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    background-color: $primary-color;
+
+    color: $white-color;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+
+    &:hover {
+        background-color: $primary-color-hover;
+    }
+
+    &_prev {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        border: 1px solid $border-color;
+        background-color: $white-color;
+        background-color: transparent;
+
+
+        img {
+            height: 40px;
+            width: 40px;
+            padding: 10px;
+            border-radius: 100%;
+        }
+
+        :hover {
+            background-color: $primary-color-hover;
+        }
+    }
+}
+
+.checkbox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.checkbox__param {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 280px;
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+
+    &_constr {
+        max-width: 175px;
+        height: 210px;
+        flex-direction: column;
+        align-items: start;
+        padding: 0;
+    }
+
+    input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+
+        &:checked+.checkbox__label::before {
+            background-color: $primary-color;
+            border-color: $primary-color;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        &:disabled+.checkbox__label {
+            cursor: not-allowed;
+
+            &::before {
+                background-color: $primary-color;
+            }
+        }
+
+        &:focus-visible+.checkbox__label::before {
+            outline: none;
+        }
+    }
+}
+
+.checkbox__label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    text-transform: none;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+    color: $secondary-color;
+    padding-left: 40px;
+    position: relative;
+    height: 40px;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        border: 1px solid $border-color;
+        border-radius: 4px;
+        background-color: $white-color;
+        transition: all 0.2s ease;
+        margin-left: 10px;
+    }
+
+    &:hover::before {
+        border-color: $primary-color;
+    }
+}
+
+.checkbox__extra {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 20px;
+    // margin-left: 10px;
+    color: $primary-color;
+}
+
+.label__title {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 20px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+}
+
+.photo-upload {
+    margin-top: 10px;
+    width: 100%;
+    background: none;
+    border: none;
+    color: $secondary-color;
+    opacity: 0.5;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s;
+
+    label {
+        cursor: pointer;
+        font: 16px;
+        font-weight: 300;
+        color: $secondary-color;
+    }
+
+    img {
+        width: 16px;
+        height: 16px;
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &__remove {
+        margin-left: 10px;
+        width: 25px;
+        height: 25px;
+        border-radius: 100%;
+        border: 1px solid $border-color;
+        font-size: 20px;
+        line-height: 20px;
+        color: $secondary-color;
+        cursor: pointer;
+        background-color: $white-color;
+
+        &:hover {
+            color: $white-color;
+            background-color: $primary-color;
+        }
+    }
+}

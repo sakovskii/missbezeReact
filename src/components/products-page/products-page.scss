@@ -1,0 +1,114 @@
+@import '../../styles/variables';
+.products-page {
+    padding-top: 75px;
+    background-color: #fff9f9;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: $primary-color;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+.products-section {
+    margin: 35px 0;
+}
+
+.products-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    gap: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+
+    .tab-btn {
+        padding: 8px 0;
+        font-size: 18px;
+        background: none;
+        border: none;
+        border-bottom: 2px solid transparent;
+        cursor: pointer;
+        transition: all 0.3s;
+        color: $secondary-color;
+        opacity: 0.5;
+        font-weight: 300;
+
+        &.active {
+            opacity: 1;
+            border-bottom-color: $primary-color;
+            color: $primary-color;
+            font-weight: 400;
+        }
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-bottom: 40px;
+
+    @media (max-width: 1200px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Стили пагинации */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 40px;
+
+    .page-btn {
+        width: 40px;
+        height: 40px;
+        border: 1px solid #ddd;
+        background: white;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover:not(.active):not(:disabled) {
+            border-color: $primary-color;
+            color: $primary-color;
+        }
+
+        &.active {
+            background: $primary-color;
+            color: white;
+            border-color: $primary-color;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        &.prev-next {
+            width: auto;
+            padding: 0 15px;
+        }
+    }
+}

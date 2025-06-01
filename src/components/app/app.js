@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductsSlider from "../products/productsSlider";
-import products from '../../data/items';
+import products from '../../api/items';
 import Header from '../header/header';
 import Promo from '../promo/promo';
 import AboutConstructor from '../about-constuctor/about-constuctor';
@@ -12,12 +12,18 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './app.scss';
 import CakeConstructor from "../cake-constructor/cake-constructor";
+import DeliveryModal from '../delivery/deliveryModal';
+import AboutPage from "../about-us/about-us";
+import ProductsPage from "../products-page/products-page";
 
 function App() {
     const [cartItems, setCartItems] = useState(() => {
         const savedCart = localStorage.getItem("cart");
         return savedCart ? JSON.parse(savedCart) : [];
     });
+    const [deliveryOpen, setDeliveryOpen] = useState(false);
+    const openDeliveryModal = () => setDeliveryOpen(true);
+    const closeDeliveryModal = () => setDeliveryOpen(false);
 
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cartItems));
@@ -57,7 +63,7 @@ function App() {
             removeFromCart(id);
             return;
         }
-        
+
         setCartItems(prevItems =>
             prevItems.map(item =>
                 item.id === id ? { ...item, quantity: newQuantity } : item
@@ -75,41 +81,44 @@ function App() {
 
     return (
         <Router>
-      <div className="app">
-        <Header 
-          cartItems={cartItems}
-          updateCartItemQuantity={updateCartItemQuantity}
-          removeFromCart={removeFromCart}
-          clearCart={clearCart}
-        />
-        
-        <Routes>
-          <Route path="/" element={
-            <>
-              <Promo />
-              <AboutConstructor />
-              <ProductsSlider
-                products={products.cakes}
-                title="Мои торты"
-                productType="cake"
-                addToCart={addToCart}
-              />
-              <ProductsSlider
-                products={products.deserts}
-                title="Мои десерты"
-                productType="desert"
-                addToCart={addToCart}
-              />
-              <Reviews />
-              <FAQ />
-              <Footer />
-            </>
-          } />
-          
-          <Route path="/constructor" element={<CakeConstructor />} />
-        </Routes>
-      </div>
-    </Router>
+            <div className="app">
+                <Header
+                    cartItems={cartItems}
+                    updateCartItemQuantity={updateCartItemQuantity}
+                    removeFromCart={removeFromCart}
+                    clearCart={clearCart}
+                    openDeliveryModal={openDeliveryModal}
+                />
+
+                <Routes>
+                    <Route path="/" element={
+                        <>
+                            <Promo cartItems={cartItems}/>
+                            <AboutConstructor />
+                            <ProductsSlider
+                                products={products.cakes}
+                                title="Мои торты"
+                                productType="cake"
+                                addToCart={addToCart}
+                            />
+                            <ProductsSlider
+                                products={products.deserts}
+                                title="Мои десерты"
+                                productType="desert"
+                                addToCart={addToCart}
+                            />
+                            <Reviews />
+                            <FAQ />
+                            <Footer cartItems={cartItems}/>
+                        </>
+                    } />
+                    <Route path="/products" element={<ProductsPage addToCart={addToCart}/>} /> 
+                    <Route path="/constructor" element={<CakeConstructor />} />
+                    <Route path="/about" element={<AboutPage/>} /> 
+                </Routes>
+                <DeliveryModal isOpen={deliveryOpen} onClose={closeDeliveryModal} />
+            </div>
+        </Router>
     );
 }
 

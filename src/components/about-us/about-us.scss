@@ -1,0 +1,161 @@
+@import '../../styles/variables';
+
+.about {
+    padding-top: 75px;
+    color: #333;
+    line-height: 1.6;
+
+    &__section {
+        padding: 35px 0;
+        background-color: $white-color;
+    }
+
+    &__text {
+        font-size: 16px;
+        font-weight: 300;
+        margin-bottom: 20px;
+        text-align: left;
+        color: $secondary-color;
+
+        &_intro {
+            font-size: 20px;
+            font-weight: 500;
+            color: #d85a5a;
+        }
+    }
+
+    &__subtitle {
+        font-size: 18px;
+        color: $secondary-color;
+        margin: 40px 0 20px;
+        text-align: left;
+        font-weight: 500;
+    }
+
+    &__list {
+        list-style-type: none;
+        padding-left: 30px;
+    }
+
+    &__list-item {
+        margin-bottom: 20px;
+        display: flex;
+        background-image: url('../../assets/img/main/check.svg');
+        background-repeat: no-repeat;
+        background-position: left;
+        padding-left: 24px;
+
+        p {
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 24px;
+            color: $secondary-color;
+            span {
+                font-weight: 500;
+            }
+        }
+
+    }
+
+}
+
+
+.certificates {
+    padding-bottom: 35px;
+    background-color: $white-color;
+
+    &__slider {
+        padding: 0 20px;
+    }
+
+    &__card {
+        cursor: pointer;
+        transition: transform 0.3s;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: $white-color;
+        border-radius: 8px;
+        overflow: hidden;
+
+        &:hover {
+            transform: scale(1.03);
+        }
+    }
+
+    &__image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: $primary-color; 
+  
+  &:after {
+    font-size: 24px; 
+  }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: $primary-color;
+  width: 40px; 
+  height: 40px;
+  margin-top: -20px; 
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: $btn-shadow;
+  
+
+  &::after {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+.swiper-button-prev {
+  left: 10px; /* Отступ слева */
+}
+
+.swiper-button-next {
+  right: 10px; /* Отступ справа */
+}
+
+/* Дополнительно: стиль при наведении */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: $primary-color;
+  color: white;
+}
+
+.swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.swiper-pagination-bullet-active {
+  width: 24px;
+  background: $primary-color;
+}
+
+
+@media (max-width: 768px) {
+    .about-title {
+        font-size: 28px;
+    }
+
+    .about-text {
+        font-size: 16px;
+    }
+
+    .about-subtitle {
+        font-size: 22px;
+    }
+}

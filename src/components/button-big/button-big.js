@@ -1,12 +1,11 @@
-import "./button-big.scss"
+import "./button-big.scss";
 
-const ButtonBig = ({btnText}) => {
-    return (
-        <button className="btn">
-        {btnText}
-        </button>
-    )
-        
-}
+const ButtonBig = ({ btnText, onClick }) => {
+  return (
+    <button className="btn" onClick={onClick}>
+      {btnText}
+    </button>
+  );
+};
 
 export default ButtonBig;

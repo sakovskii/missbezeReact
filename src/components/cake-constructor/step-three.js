@@ -1,21 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { cakeOptions } from './cakeOptions';
+import React, { useEffect } from 'react';
+import { cakeOptions } from '../../api/cakeOptions';
 import clip from "../../assets/img/main/clip.svg";
+import useCakeConstructor from '../../hooks/useCakeConstructor';
 
-const StepThree = ({ cakeData, updateCakeData }) => {
-  // Находим вариант "Без декора" и "Фотопечать" по имени
+const StepThree = ({ nextStep, prevStep }) => {
+  const { cakeData, updateCakeData } = useCakeConstructor();
   const noDecorOption = cakeOptions.decorations.options.find(opt => opt.name === "Без декора");
   const photoPrintOption = cakeOptions.decorations.options.find(opt => opt.name === "Фотопечать");
 
-  const [selectedDecor, setSelectedDecor] = useState([noDecorOption?.id]);
-  const [photoFile, setPhotoFile] = useState(null);
-
+  // Инициализация состояния из cakeData
   useEffect(() => {
-    // Инициализируем с "Без декора", если он есть в опциях
-    const initialDecor = noDecorOption ? [noDecorOption.id] : [];
-    setSelectedDecor(initialDecor);
-    updateCakeData({ decorations: initialDecor });
-  }, [noDecorOption]);
+  // Если ничего не выбрано — ставим "без декора"
+  if (cakeData.decorations?.items?.length === 0 && noDecorOption) {
+    updateCakeData(prev => ({
+      ...prev,
+      decorations: {
+        ...prev.decorations,
+        items: [noDecorOption.id]
+      }
+    }));
+  }
+
+  if (
+  cakeData.decorations?.fileObject instanceof File &&
+  !cakeData.decorations?.printPhoto
+) {
+  const url = URL.createObjectURL(cakeData.decorations.fileObject);
+  updateCakeData(prev => ({
+    ...prev,
+    decorations: {
+      ...prev.decorations,
+      printPhoto: url
+    }
+  }));
+}
+}, []);
 
   const handleDecorChange = (id) => {
     const isNoDecor = id === noDecorOption?.id;
@@ -24,40 +43,95 @@ const StepThree = ({ cakeData, updateCakeData }) => {
     let newSelection;
 
     if (isNoDecor) {
-      // При выборе "Без декора" сбрасываем все остальное
       newSelection = [id];
-      setPhotoFile(null);
+      updateCakeData({
+        decorations: {
+          items: newSelection,
+          photoPrint: false,
+          printPhoto: null,
+          fileObject: null
+        }
+      });
     } else {
-      if (selectedDecor.includes(id)) {
-        // Удаляем элемент из выбранных
-        newSelection = selectedDecor.filter(item => item !== id);
-        if (isPhotoPrint) setPhotoFile(null);
+      if (cakeData.decorations.items.includes(id)) {
+        newSelection = cakeData.decorations.items.filter(item => item !== id);
+        if (isPhotoPrint) {
+          updateCakeData({
+            decorations: {
+              ...cakeData.decorations,
+              items: newSelection,
+              photoPrint: false,
+              printPhoto: null,
+              fileObject: null
+            }
+          });
+        } else {
+          updateCakeData({
+            decorations: {
+              ...cakeData.decorations,
+              items: newSelection
+            }
+          });
+        }
 
-        // Если ничего не выбрано и есть "Без декора", выбираем его
         if (newSelection.length === 0 && noDecorOption) {
           newSelection = [noDecorOption.id];
+          updateCakeData({
+            decorations: {
+              items: newSelection,
+              photoPrint: false,
+              printPhoto: null,
+              fileObject: null
+            }
+          });
         }
       } else {
-        // Добавляем элемент, убираем "Без декора" если он был выбран
         newSelection = [
-          ...selectedDecor.filter(item => item !== noDecorOption?.id),
+          ...cakeData.decorations.items.filter(item => item !== noDecorOption?.id),
           id
         ];
+        updateCakeData({
+          decorations: {
+            ...cakeData.decorations,
+            items: newSelection,
+            photoPrint: isPhotoPrint ? true : cakeData.decorations.photoPrint,
+            fileObject: cakeData.decorations.fileObject,
+            printPhoto: cakeData.decorations.printPhoto
+          }
+        });
       }
     }
-
-    setSelectedDecor(newSelection);
-    updateCakeData({
-      decorations: newSelection,
-      decorationPhoto: newSelection.includes(photoPrintOption?.id) ? photoFile : null
-    });
   };
 
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setPhotoFile(file);
-      updateCakeData({ decorationPhoto: file });
+      const photoUrl = URL.createObjectURL(file);
+      updateCakeData({
+        decorations: {
+          ...cakeData.decorations,
+          printPhoto: photoUrl,
+          fileObject: file,
+          photoPrint: true
+        }
+      });
+    }
+  };
+
+  const handleRemovePhoto = (e) => {
+    e.stopPropagation();
+    updateCakeData({
+      decorations: {
+        ...cakeData.decorations,
+        printPhoto: null,
+        fileObject: null,
+        photoPrint: false
+      }
+    });
+
+    // Также убираем выбор опции фотопечати, если была выбрана
+    if (cakeData.decorations.items.includes(photoPrintOption?.id)) {
+      handleDecorChange(photoPrintOption.id);
     }
   };
 
@@ -71,9 +145,9 @@ const StepThree = ({ cakeData, updateCakeData }) => {
               <input
                 type="checkbox"
                 id={`decor-${option.id}`}
-                checked={selectedDecor.includes(option.id)}
+                checked={cakeData.decorations.items.includes(option.id)}
                 onChange={() => handleDecorChange(option.id)}
-                disabled={option.name === "Без декора" && selectedDecor.length === 1 && selectedDecor.includes(option.id)}
+                disabled={option.name === "Без декора" && cakeData.decorations.items.length === 1 && cakeData.decorations.items.includes(option.id)}
               />
               <label htmlFor={`decor-${option.id}`} className='checkbox__label'>
                 {option.name} <span className='checkbox__extra'>{option.price && `+${option.price} ₽`}</span>
@@ -82,8 +156,7 @@ const StepThree = ({ cakeData, updateCakeData }) => {
           ))}
         </div>
 
-        {/* Блок для загрузки фото (только если выбрана фотопечать) */}
-        {photoPrintOption && selectedDecor.includes(photoPrintOption.id) && (
+        {cakeData.decorations.photoPrint && (
           <div className="photo-upload">
             <img src={clip} alt="Прикрепить фото" />
             <input
@@ -93,17 +166,13 @@ const StepThree = ({ cakeData, updateCakeData }) => {
               onChange={handlePhotoUpload}
               style={{ display: 'none' }}
             />
-            <label htmlFor="decoration-photo" className="photo-upload__btn" alt='Заменить фото'>
-              {photoFile ? (
+            <label htmlFor="decoration-photo" className="photo-upload__btn">
+              {cakeData.decorations.printPhoto ? (
                 <>
-                  <span>Фото выбрано: {photoFile.name}</span>
+                  <span>Фото выбрано</span>
                   <button
                     type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setPhotoFile(null);
-                      updateCakeData({ decorationPhoto: null });
-                    }}
+                    onClick={handleRemovePhoto}
                     className="photo-upload__remove"
                   >
                     ×
@@ -116,21 +185,22 @@ const StepThree = ({ cakeData, updateCakeData }) => {
           </div>
         )}
 
-        <label className="textarea">
-          <textarea className="textarea__input"
-            name="decor_msg"
+        <div className="textarea">
+          <textarea
+            className="textarea__input"
             placeholder="Опишите ваши пожелания по декору"
-            value={cakeData.decor_msg || ''}
-            onChange={(e) => updateCakeData({ decor_msg: e.target.value })}
+            value={cakeData.decorations.comment || ''}
+            onChange={(e) => updateCakeData({
+              decorations: {
+                ...cakeData.decorations,
+                comment: e.target.value
+              }
+            })}
           />
-          <button type="button" className="textarea__button">
-            <img src={clip} alt="" />
-            Прикрепить фото
-          </button>
-        </label>
-
-
+        </div>
       </div>
+
+
     </div>
   );
 };

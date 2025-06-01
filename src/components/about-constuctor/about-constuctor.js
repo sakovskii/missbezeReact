@@ -1,13 +1,20 @@
-import "./about-constuctor.scss"
+import "./about-constuctor.scss";
 import ButtonBig from "../button-big/button-big";
 import Subtitle from "../subtitle/subtitle";
-import Title from "../title/title"
+import Title from "../title/title";
 import cakeImage from '../../assets/img/main/about-constructor_cake.png';
+import { useNavigate } from 'react-router-dom';
 
 const textForButton = "Создать";
 const subtitleText = "Преимущества:";
 
 const AboutConstructor = () => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/constructor');
+    };
+
     return (
         <section className="constructor">
             <div className="container">
@@ -19,7 +26,7 @@ const AboutConstructor = () => {
                             С нашим конструктором тортов вы сами выбираете вкус, начинку, оформление и даже размер!
                         </div>
                         <div className="constructor__advantages">
-                            <Subtitle textSubtitle = {subtitleText}/>
+                            <Subtitle textSubtitle={subtitleText} />
                             <ul className="constructor__list">
                                 <li className="constructor__item">
                                     <div className="constructor__text">Уникальный дизайн</div>
@@ -35,7 +42,7 @@ const AboutConstructor = () => {
                                 </li>
                             </ul>
                         </div>
-                        <ButtonBig btnText={textForButton}/>
+                        <ButtonBig btnText={textForButton} onClick={handleClick} />
                     </div>
                     <div className="constructor__cake">
                         <div className="constructor__bg"></div>
@@ -43,9 +50,8 @@ const AboutConstructor = () => {
                     </div>
                 </div>
             </div>
-        </section>   
+        </section>
     );
 };
-
 
 export default AboutConstructor;

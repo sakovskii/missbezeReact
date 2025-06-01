@@ -1,19 +1,17 @@
 import React from 'react';
-import { cakeOptions } from './cakeOptions';
+import { cakeOptions } from '../../api/cakeOptions';
 import useCakeConstructor from '../../hooks/useCakeConstructor';
 
 const StepOne = ({ nextStep }) => {
-  // Используем хук для управления состоянием
-  const { cakeData, updateCakeData } = useCakeConstructor();
+    const { cakeData, updateCakeData } = useCakeConstructor();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    updateCakeData({ 
-      [name]: name === 'tiers' ? parseInt(value, 10) : value,
-      // Автоматически рассчитываем вес при изменении порций
-      ...(name === 'servings' && { weight: (value * 0.2).toFixed(1) })
-    });
-  };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        updateCakeData({ 
+            [name]: name === 'servings' ? parseInt(value, 10) : value,
+            weight: name === 'servings' ? (value * 0.2).toFixed(1) : cakeData.weight
+        });
+    };
 
   return (
     <div className="step-one">

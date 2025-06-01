@@ -10,7 +10,8 @@ const Header = ({
     cartItems, 
     updateCartItemQuantity, 
     removeFromCart, 
-    clearCart 
+    clearCart,
+    openDeliveryModal
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
@@ -30,7 +31,7 @@ const Header = ({
           </div>
 
           <div className="container">
-            <NavMenu isOpen={menuOpen} closeMenu={closeMenu} />
+            <NavMenu isOpen={menuOpen} closeMenu={closeMenu}  openDeliveryModal={openDeliveryModal}/>
           </div>
 
           <div className="header__inner">

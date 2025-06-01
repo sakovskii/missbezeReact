@@ -2,18 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import products from '../../data/items';
+import products from '../../api/items';
 import './step-four.scss';
 import arrowLeft from "../../assets/img/main/arrow_left.svg";
 import clip from "../../assets/img/main/clip.svg";
+import useCakeConstructor from '../../hooks/useCakeConstructor';
 
-const StepFour = ({ cakeData, updateCakeData }) => {
-    const [reference, setReference] = useState(null);
+const StepFour = ({ nextStep, prevStep }) => {
+    const { cakeData, updateCakeData } = useCakeConstructor();
     const [slidesToShow, setSlidesToShow] = useState(3);
-
-    const formRef = useRef(null);       // для ширины
-    const sliderRef = useRef(null);     // для управления слайдером
-
+    const formRef = useRef(null);
+    const sliderRef = useRef(null);
     const nextSlide = () => sliderRef.current?.slickNext();
     const prevSlide = () => sliderRef.current?.slickPrev();
 
@@ -41,18 +40,36 @@ const StepFour = ({ cakeData, updateCakeData }) => {
     const handleFileUpload = (e) => {
         const file = e.target.files?.[0];
         if (file) {
-            const newRef = { type: 'custom', file };
-            setReference(newRef);
-            updateCakeData({ reference: newRef });
+            // Создаем временный URL для изображения
+            const fileUrl = URL.createObjectURL(file);
+            updateCakeData({
+                reference: {
+                    type: 'custom',
+                    file: fileUrl,
+                    id: null,
+                    fileObject: file // Сохраняем оригинальный файл для отправки на сервер
+                }
+            });
         }
     };
 
     const handleExampleSelect = (cakeId) => {
-        const selected = reference?.type === 'example' && reference.id === cakeId
-            ? null
-            : { type: 'example', ...products.cakes.find(c => c.id === cakeId) };
-        setReference(selected);
-        updateCakeData({ reference: selected });
+        const isSelected = cakeData.reference?.type === 'example' && cakeData.reference.id === cakeId;
+        updateCakeData({
+            reference: isSelected ? null : {
+                type: 'example',
+                id: cakeId,
+                file: null,
+                fileObject: null,
+                ...products.cakes.find(c => c.id === cakeId)
+            }
+        });
+    };
+
+
+    const handleRemovePhoto = (e) => {
+        e.stopPropagation();
+        updateCakeData({ reference: null });
     };
 
     return (
@@ -70,36 +87,41 @@ const StepFour = ({ cakeData, updateCakeData }) => {
                 </div>
 
                 <Slider {...sliderSettings} ref={sliderRef}>
-                    {products.cakes.map(cake => (
-                        <div key={cake.id} style={{ padding: '0 5px' }}>
-                            <div
-                                className={`checkbox__param checkbox__param_constr ${reference?.type === 'example' && reference.id === cake.id ? 'selected' : ''
-                                    }`}
-                            >
-                                <div className="ref-slider__img-wrapper">
-                                    <img
-                                        src={cake.imgPath}
-                                        alt={cake.name}
-                                        className="ref-slider__img"
-                                        onError={(e) => (e.target.src = '/images/default-cake.jpg')}
+                    {products.cakes.map(cake => {
+                        const isChecked = cakeData.reference?.type === 'example' && cakeData.reference.id === cake.id;
+                        return (
+                            <div key={cake.id} style={{ padding: '0 5px' }}>
+                                <div
+                                    className={`checkbox__param checkbox__param_constr ${isChecked ? 'selected' : ''}`}
+                                    onClick={() => handleExampleSelect(cake.id)}
+                                >
+                                    <div className="ref-slider__img-wrapper">
+                                        <img
+                                            src={cake.imgPath}
+                                            alt={cake.name}
+                                            className="ref-slider__img"
+                                            onError={(e) => (e.target.src = '/images/default-cake.jpg')}
+                                        />
+                                    </div>
+                                    <input
+                                        type="checkbox"
+                                        id={`cake-${cake.id}`}
+                                        checked={isChecked}
+                                        readOnly // Добавлено для управляемого чекбокса
+                                        className="visually-hidden" // Скрываем настоящий чекбокс
                                     />
+                                    <label
+                                        htmlFor={`cake-${cake.id}`}
+                                        className="checkbox__label"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        {cake.name}
+                                    </label>
                                 </div>
-                                <input
-                                    type="checkbox"
-                                    id={`cake-${cake.id}`}
-                                    checked={reference?.type === 'example' && reference.id === cake.id}
-                                    onChange={() => handleExampleSelect(cake.id)}
-                                    onClick={(e) => e.stopPropagation()}
-                                />
-                                <label htmlFor={`cake-${cake.id}`} className="checkbox__label">
-                                    {cake.name}
-                                </label>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </Slider>
-
-
             </div>
 
             <div className="param__group">
@@ -115,16 +137,12 @@ const StepFour = ({ cakeData, updateCakeData }) => {
                             style={{ display: 'none' }}
                         />
                         <label htmlFor="custom-reference-upload" className="photo-upload__btn">
-                            {reference?.type === 'custom' ? (
+                            {cakeData.reference?.type === 'custom' ? (
                                 <>
-                                    <span>Фото: {reference.file.name}</span>
+                                    <span>Фото загружено</span>
                                     <button
                                         type="button"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setReference(null);
-                                            updateCakeData({ reference: null });
-                                        }}
+                                        onClick={handleRemovePhoto}
                                         className="photo-upload__remove"
                                     >
                                         ×

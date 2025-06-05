@@ -19,20 +19,14 @@ const ProductsSlider = ({ products, title, productType, addToCart }) => {
     slidesToShow: 4,
     slidesToScroll: 1,
     responsive: [
-      {
-        breakpoint: 992,
-        settings: { slidesToShow: 3 },
-      },
-      {
-        breakpoint: 768,
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 576,
-        settings: { slidesToShow: 1 },
-      },
+      { breakpoint: 992, settings: { slidesToShow: 3 } },
+      { breakpoint: 768, settings: { slidesToShow: 2 } },
+      { breakpoint: 576, settings: { slidesToShow: 1 } },
     ],
   };
+
+  console.log("Products в слайдере:", products);
+   const visibleProducts = products.filter(product => product.visible === "1");
 
   return (
     <section className={`slider slider_${productType}`} id={`${productType}-slider`}>
@@ -53,15 +47,13 @@ const ProductsSlider = ({ products, title, productType, addToCart }) => {
         </div>
 
         <Slider {...settings} ref={sliderRef} className="slider__slick">
-          {products.map((product) => (
+          {visibleProducts.map((product) => (
             <div className="slider__item" key={product.id}>
               <div className="slider__img-wrapper">
-                <img src={product.imgPath} alt={product.name} className="slider__img" />
+                <img src={`http://miss-beze.local${product.imgPath}`} alt={product.name} className="slider__img" />
               </div>
               <div className="slider__info">
-                {product.price && (
-                  <div className="slider__price">{product.price.toLocaleString()} ₽</div>
-                )}
+                {product.price && <div className="slider__price">{product.price.toLocaleString()} ₽</div>}
                 <h3 className="slider__name">{product.name}</h3>
                 <p className="slider__descr">Подробнее</p>
                 <button

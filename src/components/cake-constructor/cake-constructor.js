@@ -10,7 +10,7 @@ import StepFour from './step-four';
 import StepFive from './step-five';
 import useCakeConstructor from '../../hooks/useCakeConstructor';
 
-const CakeConstructor = () => {
+const CakeConstructor = ({products}) => {
     const [step, setStep] = useState(1);
     const { cakeData, updateCakeData, resetCakeData } = useCakeConstructor();
 
@@ -18,7 +18,6 @@ const CakeConstructor = () => {
     const prevStep = () => setStep(prev => prev - 1);
 
     const handleComplete = () => {
-        // Здесь можно добавить логику завершения заказа
         console.log('Заказ завершен:', cakeData);
         resetCakeData();
         setStep(1);
@@ -33,7 +32,7 @@ const CakeConstructor = () => {
             case 3:
                 return <StepThree nextStep={nextStep} prevStep={prevStep} />;
             case 4:
-                return <StepFour nextStep={nextStep} prevStep={prevStep} />;
+                return <StepFour products={products} nextStep={nextStep} prevStep={prevStep} />;
             case 5:
             return (
                 <StepFive

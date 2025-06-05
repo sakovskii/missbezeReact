@@ -17,7 +17,7 @@ const Cart = ({ isOpen, cartItems, onClose, updateQuantity, removeItem, clearCar
           {cartItems.length > 0 ? (
             cartItems.map(item => (
               <div className="cart__item" key={item.id}>
-                <img src={item.image} alt={item.name} className="cart__item-img" />
+                <img src={`http://miss-beze.local${item.image}`} alt={item.name} className="cart__item-img" />
                 <div className="cart__item-info">
                   <p className="cart__item-name">{item.name}</p>
                   <p className="cart__item-price">{(item.price * item.quantity).toLocaleString('ru-RU')} ₽</p>

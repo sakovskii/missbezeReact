@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import products from '../../api/items';
+//import products from '../../api/items';
 import './step-four.scss';
 import arrowLeft from "../../assets/img/main/arrow_left.svg";
 import clip from "../../assets/img/main/clip.svg";
 import useCakeConstructor from '../../hooks/useCakeConstructor';
 
-const StepFour = ({ nextStep, prevStep }) => {
+const StepFour = ({products, nextStep, prevStep }) => {
     const { cakeData, updateCakeData } = useCakeConstructor();
     const [slidesToShow, setSlidesToShow] = useState(3);
     const formRef = useRef(null);
@@ -97,7 +97,7 @@ const StepFour = ({ nextStep, prevStep }) => {
                                 >
                                     <div className="ref-slider__img-wrapper">
                                         <img
-                                            src={cake.imgPath}
+                                            src={`http://miss-beze.local${cake.imgPath}`}
                                             alt={cake.name}
                                             className="ref-slider__img"
                                             onError={(e) => (e.target.src = '/images/default-cake.jpg')}

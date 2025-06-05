@@ -31,7 +31,7 @@ const ProductModal = ({ product, productType, onClose, addToCart }) => {
         
         <div className="product-modal__image-container">
           <img 
-            src={product.imgPath} 
+            src={`http://miss-beze.local${product.imgPath}`} 
             alt={product.name}
             className="product-modal__image"
             onError={(e) => {

@@ -1,9 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import './products-page.scss';
-import products from '../../api/items';
 import ProductModal from './product-modal';
 
-const ProductsPage = ({ addToCart }) => {
+const ProductsPage = ({products, addToCart }) => {
   const [activeTab, setActiveTab] = useState('cakes');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -77,7 +76,7 @@ const ProductsPage = ({ addToCart }) => {
               >
                 <div className="slider__img-wrapper">
                   <img 
-                    src={product.imgPath} 
+                    src={`http://miss-beze.local${product.imgPath}`}
                     alt={product.name} 
                     className="slider__img" 
                     onError={(e) => {

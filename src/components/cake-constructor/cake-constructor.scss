@@ -174,7 +174,7 @@ $max-with_pc: 630px;
         transition: all 0.3s;
 
         &.active {
-            border-color: #d45d79;
+            border-color: $primary-color;
             background-color: #f8e8ed;
         }
     }
@@ -186,11 +186,11 @@ $max-with_pc: 630px;
 }
 
 .configurator__preview {
-    width: 350px;
+    width: 300px;
     background: white;
-    padding: 20px;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
 }
 
 .preview-block {

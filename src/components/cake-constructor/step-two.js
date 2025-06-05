@@ -3,25 +3,47 @@ import { cakeOptions } from '../../api/cakeOptions';
 import useCakeConstructor from '../../hooks/useCakeConstructor';
 
 const StepTwo = ({ nextStep, prevStep }) => {
-  const { cakeData, updateCakeData } = useCakeConstructor();
+  const {
+    cakeData,
+    updateCakeData,
+    fillings,
+    coatings,
+    isLoading,
+    error
+  } = useCakeConstructor();
+  console.log(fillings);
 
   const handleFillingChange = (e) => {
+    // const selectedId = parseInt(e.target.value);
+    // const selectedFilling = fillings.find(f => f.id === selectedId);
+    const selectedId = e.target.value; // оставить строкой
+    const selectedFilling = fillings.find(f => f.id === selectedId);
+
     updateCakeData({
       filling: {
-        ...cakeData.filling,
-        id: e.target.value,
+        id: parseInt(selectedId),
+        name: selectedFilling?.name || '',
+        cakeColor: selectedFilling?.biscuit_color || '#E9C57C',
+        creamColor: selectedFilling?.filling_color || '#FFFFFF',
+        comment: cakeData.filling.comment
       }
     });
   };
 
   const handleCoatingChange = (e) => {
+    const selectedId = e.target.value; // оставить строкой
+    const selectedCoating = coatings.find(c => c.id === selectedId);
+
     updateCakeData({
       coating: {
-        ...cakeData.coating,
-        id: e.target.value,
+        id: parseInt(selectedId), // сохранить как число, если нужно
+        name: selectedCoating?.name || '',
+        color: selectedCoating?.color_code || 'white',
+        comment: cakeData.coating.comment
       }
     });
   };
+
 
   const handleCommentChange = (e) => {
     const { name, value } = e.target;
@@ -42,6 +64,18 @@ const StepTwo = ({ nextStep, prevStep }) => {
     }
   };
 
+  if (isLoading.fillings || isLoading.coatings) {
+    return <div className="loading-message">Загрузка данных...</div>;
+  }
+
+  if (error.fillings || error.coatings) {
+    return (
+      <div className="error-message">
+        Ошибка загрузки данных: {error.fillings || error.coatings}
+      </div>
+    );
+  }
+
   return (
     <div className="step-two">
       {/* Начинка */}
@@ -54,10 +88,10 @@ const StepTwo = ({ nextStep, prevStep }) => {
           onChange={handleFillingChange}
           required
         >
-          <option value="" disabled>Выберите</option>
-          {cakeOptions.fillings.options.map(option => (
-            <option key={option.id} value={option.id}>
-              {option.name} {option.price && `(+${option.price} ₽)`}
+          <option value="" disabled>Выберите начинку</option>
+          {fillings.map(filling => (
+            <option key={filling.id} value={filling.id}>
+              {filling.name}
             </option>
           ))}
         </select>
@@ -79,10 +113,10 @@ const StepTwo = ({ nextStep, prevStep }) => {
           onChange={handleCoatingChange}
           required
         >
-          <option value="" disabled>Выберите</option>
-          {cakeOptions.coatings.options.map(option => (
-            <option key={option.id} value={option.id}>
-              {option.name} {option.price && `(+${option.price} ₽)`}
+          <option value="" disabled>Выберите покрытие</option>
+          {coatings.map(coating => (
+            <option key={coating.id} value={coating.id}>
+              {coating.name}
             </option>
           ))}
         </select>
@@ -93,8 +127,6 @@ const StepTwo = ({ nextStep, prevStep }) => {
           onChange={handleCommentChange}
         />
       </div>
-
-      
     </div>
   );
 };

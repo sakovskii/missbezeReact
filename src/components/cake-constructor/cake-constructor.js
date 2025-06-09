@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './cake-constructor.scss';
 import StepOne from './step-one';
 import StepTwo from './step-two';
@@ -8,9 +8,9 @@ import arrowBack from '../../assets/img/main/arrow_back.svg';
 import StepThree from './step-three';
 import StepFour from './step-four';
 import StepFive from './step-five';
-import useCakeConstructor from '../../hooks/useCakeConstructor';
+import { useCakeConstructor } from '../../hooks/useCakeConstructor';
 
-const CakeConstructor = ({products}) => {
+const CakeConstructor = ({ products }) => {
     const [step, setStep] = useState(1);
     const { cakeData, updateCakeData, resetCakeData } = useCakeConstructor();
 
@@ -23,6 +23,10 @@ const CakeConstructor = ({products}) => {
         setStep(1);
     };
 
+    useEffect(() => {
+        console.log('Конструктор открыт:', cakeData);
+    }, [cakeData]);
+
     const renderStepContent = () => {
         switch (step) {
             case 1:
@@ -34,14 +38,14 @@ const CakeConstructor = ({products}) => {
             case 4:
                 return <StepFour products={products} nextStep={nextStep} prevStep={prevStep} />;
             case 5:
-            return (
-                <StepFive
-                    prevStep={prevStep}
-                    onComplete={handleComplete}
-                    cakeData={cakeData}
-                    updateCakeData={updateCakeData}
-                />
-            );
+                return (
+                    <StepFive
+                        prevStep={prevStep}
+                        onComplete={handleComplete}
+                        cakeData={cakeData}
+                        updateCakeData={updateCakeData}
+                    />
+                );
             default:
                 return <StepOne nextStep={nextStep} />;
         }
@@ -77,14 +81,14 @@ const CakeConstructor = ({products}) => {
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="configurator__right">
                         <div className="configurator__preview">
                             <Preview cakeData={cakeData} />
                         </div>
                     </div>
                 </div>
-                
+
                 <div className="configurator__footer">
                     <p className="warning">
                         <span className='warning_red'>Важно! </span>
@@ -96,8 +100,8 @@ const CakeConstructor = ({products}) => {
                                 <img src={arrowBack} alt="Вернуться назад" />
                             </button>
                         )}
-                        <button 
-                            className="nav-button nav-button_next" 
+                        <button
+                            className="nav-button nav-button_next"
                             onClick={step === 5 ? handleComplete : nextStep}
                         >
                             {step < 5 ? 'Далее' : 'Завершить'}

@@ -14,6 +14,7 @@ import ProductsPage from "../products-page/products-page";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./app.scss";
+import { CakeConstructorProvider } from '../../hooks/useCakeConstructor.js';
 
 function App() {
     const [products, setProducts] = useState({ cakes: [], deserts: [] });
@@ -58,7 +59,7 @@ function App() {
             });
     }, []);
 
-    
+
     const addToCart = (product, productType) => {
         setCartItems((prevItems) => {
             const existingItem = prevItems.find(
@@ -146,7 +147,15 @@ function App() {
                         }
                     />
                     <Route path="/products" element={<ProductsPage products={products} addToCart={addToCart} />} />
-                    <Route path="/constructor" element={<CakeConstructor products={products}/>} />
+                    {/* <Route path="/constructor" element={<CakeConstructor products={products}/>} /> */}
+                    <Route
+                        path="/constructor"
+                        element={
+                            <CakeConstructorProvider>
+                                <CakeConstructor products={products} />
+                            </CakeConstructorProvider>
+                        }
+                    />
                     <Route path="/about" element={<AboutPage />} />
                 </Routes>
                 <DeliveryModal isOpen={deliveryOpen} onClose={closeDeliveryModal} />

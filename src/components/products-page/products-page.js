@@ -143,6 +143,7 @@ const ProductsPage = ({products, addToCart }) => {
         />
       )}
     </div>
+    
   );
 };
 

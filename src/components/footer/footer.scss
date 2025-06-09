@@ -60,17 +60,20 @@
         color: $secondary-color;
     }
 
-    &__line {
-        position: absolute;
-        height: 60px;
-        width: 100%;
-        margin-top: auto;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: $secondary-color;
-    }
 
+
+
+}
+
+.footer__line {
+    position: absolute;
+    height: 60px;
+    width: 100%;
+    margin-top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: $secondary-color;
 
 }
 
@@ -99,7 +102,7 @@
 
     &__textarea-wrapper {
         position: relative;
- 
+
         textarea {
             width: 100%;
             height: 110px;
@@ -110,30 +113,31 @@
             margin-bottom: 60px;
             resize: none;
         }
-    
+
         .attach-button {
-          position: absolute;
-          bottom: 40px;
-          left: 15px;
-          background: none;
-          border: none;
-          color: $secondary-color;
-          opacity: 0.5;
-          font-size: 0.9rem;
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          cursor: pointer;
-          padding: 0;
-          transition: all 0.3s;
-    
-          svg {
-            width: 16px;
-            height: 16px;
-          }
-          &:hover {
-            opacity: 1;
-          }
+            position: absolute;
+            bottom: 40px;
+            left: 15px;
+            background: none;
+            border: none;
+            color: $secondary-color;
+            opacity: 0.5;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.3s;
+
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            &:hover {
+                opacity: 1;
+            }
         }
     }
 
@@ -153,10 +157,10 @@
         display: flex;
         flex-direction: column;
         align-items: end;
-       
+
     }
 
-    &__right p{
+    &__right p {
         margin-top: 10px;
         font-size: 10px;
         font-weight: 300;
@@ -164,19 +168,22 @@
         opacity: 0.5;
         text-align: center;
     }
+
     &__right span {
         font-size: 10px;
         font-weight: 300;
         line-height: 10px;
         text-decoration: underline;
     }
-    &__right span:hover{
+
+    &__right span:hover {
         cursor: pointer;
     }
 
 
 
 }
+
 .order {
     width: 100%;
     padding: 100px 0;
@@ -295,22 +302,26 @@
             flex-direction: column;
             align-items: center;
         }
+
         &__contacts {
             margin-right: 0;
             margin-bottom: 30px;
 
         }
     }
+
     .form {
         max-width: 100%;
+
         label {
             width: 100%;
         }
+
         input {
             width: 100%;
         }
     }
-   
+
 }
 
 @media (max-width: 576px) {
@@ -320,6 +331,7 @@
             flex-direction: column;
             align-items: center;
         }
+
         &__contacts {
             max-width: 100%;
             width: 100%;
@@ -328,12 +340,15 @@
 
         }
     }
+
     .form {
         max-width: 100%;
         width: 100%;
+
         label {
             width: 100%;
         }
+
         input {
             width: 100%;
         }

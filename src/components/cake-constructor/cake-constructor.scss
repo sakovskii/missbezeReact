@@ -189,7 +189,7 @@ $max-with_pc: 630px;
     width: 300px;
     background: white;
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
     overflow: hidden;
 }
 
@@ -268,7 +268,7 @@ $max-with_pc: 630px;
 
         textarea:focus {
             outline: none; // убирает синюю обводку браузера
-            border: none; // убирает сам border
+            //border: none; // убирает сам border
             box-shadow: none; // на всякий случай, если браузер добавляет glow
         }
 

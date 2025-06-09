@@ -37,10 +37,6 @@ const Footer = ({ cartItems }) => {
 
             <label className="form__textarea-wrapper">
               <textarea name="message" placeholder="Комментарий к заказу" />
-              <button type="button" className="attach-button">
-                <img src={clip} alt="" />
-                Прикрепить фото
-              </button>
             </label>
 
             <div className="form__bottom">
@@ -64,7 +60,7 @@ const Footer = ({ cartItems }) => {
           </form>
         </div>
       </div>
-      <div className="order__line"></div>
+      <div className="footer__line"></div>
     </footer>
   );
 };

@@ -1,60 +1,78 @@
 import React, { useState, useEffect } from 'react';
 import clip from "../../assets/img/main/clip.svg";
+import { useCakeConstructor } from '../../hooks/useCakeConstructor';
 
-const StepFive = ({ cakeData, updateCakeData }) => {
-  const formData = cakeData?.formData || {};
+const StepFive = ({ nextStep, prevStep }) => {
+  const { cakeData, updateCakeData } = useCakeConstructor();
+  const formData = cakeData?.data || {};
   const [attachedFile, setAttachedFile] = useState(formData.attachedFile || null);
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    updateCakeData({
-      ...cakeData,
-      formData: {
-        ...formData,
-        [name]: value
-      }
+    console.log('Input change:', { name, value });
+    updateCakeData(5, {
+      [name]: value
     });
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {
+      console.log('File uploaded:', file);
       setAttachedFile(file);
-      updateCakeData({
-        ...cakeData,
-        formData: {
-          ...formData,
-          attachedFile: file
-        }
+      updateCakeData(5, {
+        attachedFile: file
       });
     }
   };
 
   const removeFile = () => {
+    console.log('Removing file');
     setAttachedFile(null);
-    updateCakeData({
-      ...cakeData,
-      formData: {
-        ...formData,
-        attachedFile: null
-      }
+    updateCakeData(5, {
+      attachedFile: null
     });
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.datetime) newErrors.datetime = 'Укажите дату и время';
+    if (!formData.address) newErrors.address = 'Укажите адрес';
+    if (!formData.name) newErrors.name = 'Укажите имя';
+    if (!formData.phone) newErrors.phone = 'Укажите телефон';
+    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Некорректный email';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      console.log('Form validated, proceeding to next step');
+      nextStep();
+    } else {
+      console.log('Form validation failed:', errors);
+    }
+  };
+
+  // Отладка
+  console.log('StepFive - current formData:', formData);
+
   return (
-    <form className="form form_constr">
+    <form className="form form_constr" onSubmit={handleSubmit}>
       <div className="param__group">
         <div className="label__title">Когда и куда привезти</div>
-
         <div className="form__wrapper">
           <label>
             <input
               type="datetime-local"
-              name="date"
+              name="datetime"
               required
-              value={formData.date || ''}
+              value={formData.datetime || ''}
               onChange={handleInputChange}
             />
+            {errors.datetime && <span className="error">{errors.datetime}</span>}
           </label>
 
           <label>
@@ -66,6 +84,7 @@ const StepFive = ({ cakeData, updateCakeData }) => {
               value={formData.address || ''}
               onChange={handleInputChange}
             />
+            {errors.address && <span className="error">{errors.address}</span>}
           </label>
         </div>
       </div>
@@ -82,6 +101,7 @@ const StepFive = ({ cakeData, updateCakeData }) => {
               value={formData.name || ''}
               onChange={handleInputChange}
             />
+            {errors.name && <span className="error">{errors.name}</span>}
           </label>
 
           <label>
@@ -89,10 +109,10 @@ const StepFive = ({ cakeData, updateCakeData }) => {
               type="email"
               name="email"
               placeholder="Ваш email"
-              required
               value={formData.email || ''}
               onChange={handleInputChange}
             />
+            {errors.email && <span className="error">{errors.email}</span>}
           </label>
 
           <label>
@@ -104,38 +124,21 @@ const StepFive = ({ cakeData, updateCakeData }) => {
               value={formData.phone || ''}
               onChange={handleInputChange}
             />
+            {errors.phone && <span className="error">{errors.phone}</span>}
           </label>
         </div>
 
         <label className="form__textarea-wrapper">
           <textarea
-            name="message"
+            name="comment"
             placeholder="Комментарий к заказу"
-            value={formData.message || ''}
+            value={formData.comment || ''}
             onChange={handleInputChange}
           />
-          <input
-            type="file"
-            id="fileUpload"
-            accept="image/*"
-            onChange={handleFileChange}
-            style={{ display: "none" }}
-          />
-          <label htmlFor="fileUpload" className="attach-button">
-            <img src={clip} alt="скрепка" />
-            {attachedFile ? (
-              <>
-                <span>{attachedFile.name}</span>
-                <button type="button" className="remove-btn" onClick={removeFile}>
-                  ×
-                </button>
-              </>
-            ) : (
-              "Прикрепить фото"
-            )}
-          </label>
         </label>
       </div>
+
+      
     </form>
   );
 };

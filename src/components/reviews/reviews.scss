@@ -7,7 +7,6 @@
     padding: 0;
     background-color: $pink-color;
 
-    // Градиентный фон вместо изображения
     &__img {
         position: absolute;
         height: 100%;
@@ -32,73 +31,68 @@
         position: relative;
         max-width: 600px;
         width: 100%;
-        width: 100%; // Учитываем ширину картинки
         height: 100%;
         padding: 100px 0;
-        margin-left: auto; // Прижимаем блок вправо
+        margin-left: auto;
         display: flex;
         flex-direction: column;
-        align-items: flex-end; // Прижимаем содержимое вправо
+        align-items: flex-end;
         justify-content: space-between;
     }
 
     .slick-slide {
-        padding: 0 15px; // Отступ слева и справа (итого 30px между слайдами)
-        box-sizing: border-box; // Чтобы padding не увеличивал ширину
-
+        padding: 0 15px;
+        box-sizing: border-box;
     }
+
     .slick-list {
-        padding: 10px;
+        height: 250px;
+        padding: 0; // Убрали лишний padding
     }
 
-    &__slider {
-        &_wrapper {
-            max-width: 510px;
-            max-height: 400px;
-            margin: 0 auto;
-            display: flex;
-            overflow: hidden;
-            padding-bottom: 10px;
-        }
+    &__slider_wrapper {
+        max-width: 510px;
+        width: 100%;
+        margin: 0 auto;
+    }
 
-        &_inner {
-            // display: flex;
-            transition: 0.5s all;
-        }
-
-        &_item {
-            display: flex;
-            justify-content: space-between;
-            flex-direction: column;
-            background-color: #fff;
-            //max-width: 500px;
-            height: auto;
-            padding: 25px;
-            // margin: 10px;
-            border-radius: 20px;
-            box-shadow: 0.1em 0.1em 0.3em rgba(0, 0, 0, 0.15);
-           // margin-bottom: 70px;
-            // margin-right: 30px;
-        }
+    &__item-wrapper {
+        height: 300px;
+        padding: 10px 0;
+    }
+    .slider__slick {
+        height: 250px;
+    }
+    &__slider_item {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: #fff;
+        min-height: 200px; // Минимальная высота для видимости
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0.1em 0.1em 0.3em rgba(0, 0, 0, 0.15);
+        box-sizing: border-box;
     }
 
     &__name {
         font-size: 18px;
         font-weight: 700;
-        margin-bottom: 30px;
+        margin-bottom: 10px; // Уменьшили отступ
     }
 
     &__descr {
-        font-size: 18px;
+        font-size: 16px; // Уменьшили размер шрифта
         font-weight: 500;
-        line-height: 24px;
+        line-height: 22px; // Уменьшили межстрочный интервал
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-height: 110px; // Ограничиваем высоту текста
     }
 
     &__stars {
-        margin-top: 20px;
+        margin-top: 15px;
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
     }
-
-
 }

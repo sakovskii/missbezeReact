@@ -79,7 +79,7 @@
       color: $text-color;
       text-decoration: none;
       font-weight: 300;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 22px;
     }
   }
@@ -87,11 +87,11 @@
   &__email,
   &__phone {
     font-weight: 300;
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   .header {
     height: 60px;
 
@@ -108,10 +108,7 @@
 @media (max-width: 768px) {
   .header {
     &__contacts {
-      a {
-        font-size: 14px;
-        line-height: 22px;
-      }
+      display: none;
     }
   }
 }

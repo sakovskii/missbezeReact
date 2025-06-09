@@ -1,4 +1,5 @@
 @import '../../styles/variables';
+
 .products-page {
     padding-top: 75px;
     height: 100%;
@@ -66,8 +67,19 @@
         grid-template-columns: repeat(2, 1fr);
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 576px) {
+
         grid-template-columns: 1fr;
+        justify-content: center; // Центрируем элементы сетки
+        gap: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .slider__item {
+            width: 300px;
+            // margin: 0 auto; // Центрируем карточку в ячейке
+        }
     }
 }
 

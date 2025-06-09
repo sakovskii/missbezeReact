@@ -2,7 +2,7 @@
 
 .reviews {
     width: 100%;
-    height: 710px;
+    max-height: 650px;
     position: relative;
     padding: 0;
     background-color: $pink-color;
@@ -60,9 +60,11 @@
         height: 300px;
         padding: 10px 0;
     }
+
     .slider__slick {
         height: 250px;
     }
+
     &__slider_item {
         display: flex;
         flex-direction: column;
@@ -94,5 +96,49 @@
         margin-top: 15px;
         display: flex;
         justify-content: flex-end;
+    }
+
+    &__btn {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 1400px) {
+    .reviews {
+        &__img {
+            left: -20%;
+        }
+    }
+}
+
+@media (max-width: 992px) {
+    .reviews {
+        position: relative;
+        z-index: 0;
+        overflow: hidden;
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url('../../assets/img/main/revies_cake.jpg') no-repeat center center / cover;
+            filter: blur(2px); // размытие + затемнение
+            z-index: -1;
+            opacity: 0.2;
+        }
+
+        max-height: 550px;
+
+        &__inner {
+            padding: 45px 0;
+        }
+
+        &__img {
+            display: none;
+        }
+
+        &__item-wrapper {
+            height: 250px;
+        }
     }
 }

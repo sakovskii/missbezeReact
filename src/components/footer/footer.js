@@ -35,15 +35,13 @@ const Footer = ({ cartItems }) => {
               <label><input type="tel" name="phone" placeholder="Ваш телефон *" required /></label>
             </div>
 
-            <label className="form__textarea-wrapper">
-              <textarea name="message" placeholder="Комментарий к заказу" />
-            </label>
+            <textarea name="message" placeholder="Комментарий к заказу" />
 
             <div className="form__bottom">
               <div className="form__left">
                 <div className="price">
                   {totalPrice > 0 ? (
-                    <>Цена — <span>{totalPrice}</span> ₽</>
+                    <>Цена — <span>{totalPrice.toLocaleString('ru-RU')}</span> ₽</>
                   ) : (
                     <>Добавьте товары в корзину.</>
                   )}

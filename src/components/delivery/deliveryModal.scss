@@ -65,3 +65,37 @@
 
 
 }
+
+@media (max-width: 576px) {
+
+  .modal {
+    &__title {
+      font-size: 18px;
+    }
+
+    &__subtitle {
+      margin-top: 35px;
+      font-family: 'Montserrat';
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 14px;
+      color: $secondary-color;
+    }
+
+    &__descr {
+      margin-top: 20px;
+      padding-left: 20px;
+      font-family: 'Montserrat';
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 20px;
+      color: $secondary-color;
+
+      span {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+      }
+    }
+  }
+}
